@@ -1,5 +1,3 @@
-```python
-
 # Decimal to Degrees Converter
 # TODO: Make function to convert decimal to degrees and other way around
 # TODO: Make GUI
@@ -35,6 +33,3 @@ def degrees_to_decimal():
     pass
 
 decimal_to_degrees()
-
-
-```
