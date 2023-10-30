@@ -1,6 +1,6 @@
 # Decimal to Degrees Converter
-# TODO: Make function to convert decimal to degrees and other way around
 # TODO: Make GUI
+# TODO: Make final angle... if its 700°, it shows 340°. or if its 700.50, it shows 340,50.
 
 def decimal_to_degrees():
     user_input = (input("Input your angle in decimal form: "))
@@ -17,7 +17,6 @@ def decimal_to_degrees():
     minutes = minutes_decimal_part * 60
     result_minutes = str(minutes).split(separator, 1)[0]
 
-
     seconds_decimal_part = str(minutes).split(separator, 1)[-1]
     seconds_decimal_part = ("0." + str(seconds_decimal_part))
     seconds_decimal_part = float(seconds_decimal_part)
@@ -26,10 +25,10 @@ def decimal_to_degrees():
 
     print(result_angle + "°" + result_minutes + "'" + result_seconds + '"')
 
-
-
-
 def degrees_to_decimal():
-    pass
+    user_input_degrees = input("Input your degrees: ")
+    user_input_minutes = input("Input your minutes: ")
+    user_input_seconds = input("Input your seconds: ")
 
-decimal_to_degrees()
+    result_decimal = float(user_input_degrees) + (float(user_input_minutes)/60) + (float(user_input_seconds)/3600)
+    print(result_decimal)
