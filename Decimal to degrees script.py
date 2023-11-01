@@ -1,8 +1,12 @@
 # Decimal to Degrees Converter
 # TODO: Make GUI compatible with functions
 # TODO: Make final angle... if its 700°, it shows 340°. or if its 700.50, it shows 340,50.
+import tkinter
 from tkinter import *
+import threading
+import time
 
+global decimal_switch
 
 def decimal_to_degrees():
     user_input = (input("Input your angle in decimal form: "))
@@ -28,17 +32,45 @@ def decimal_to_degrees():
     print(result_angle + "°" + result_minutes + "'" + result_seconds + '"')
 
 def degrees_to_decimal():
-    user_input_degrees = input("Input your degrees: ")
-    user_input_minutes = input("Input your minutes: ")
-    user_input_seconds = input("Input your seconds: ")
 
-    result_decimal = float(user_input_degrees) + (float(user_input_minutes)/60) + (float(user_input_seconds)/3600)
-    print(result_decimal)
+    while not decimal_switch:
+        user_input_degrees = str(degrees_entry_box.get())
+        user_input_minutes = str(minutes_entry_box.get())
+        user_input_seconds = str(seconds_entry_box.get())
+        result_decimal = (float(user_input_degrees) if user_input_degrees != "" else 0.0) + \
+                         ((float(user_input_minutes)/60) if user_input_minutes != "" else 0.0) + \
+                         ((float(user_input_seconds)/3600) if user_input_seconds != "" else 0.0)
+        decimal_entry_box.delete(0, tkinter.END)
+        decimal_entry_box.insert(0, str(result_decimal))
+        time.sleep(0.1)
+
+
+t = threading.Thread(name='degreesToDecimal', target=degrees_to_decimal)
+
+
 
 window = Tk()
 window.title("Made for KMS <3")
 window.geometry("553x270")
 window.configure(bg='gray')
+
+def window_focus():
+    while True:
+        global decimal_switch
+        widget = window.focus_get()
+        print(widget)
+        if str(widget) == ".!labelframe4.!entry":
+            decimal_switch = True
+            print("decimal focused")
+        else:
+            decimal_switch = False
+            print("decimal NOT focused")
+        time.sleep(1)
+
+
+
+
+f = threading.Thread(name='focus', target=window_focus)
 
 frame1 = LabelFrame(window, bg="green", bd=5)
 frame1.grid(row=0, column=0)
@@ -103,6 +135,8 @@ decimal_entry_box = Entry(frame4, bd=2,width=20, font=('Arial',10,'bold'))
 decimal_entry_box.insert(0, "0")
 decimal_entry_box.grid(row=0, column=0)
 
-
+t.start()
+f.start()
 
 window.mainloop()
+
