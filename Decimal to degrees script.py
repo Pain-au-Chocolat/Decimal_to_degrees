@@ -1,4 +1,6 @@
 # Decimal to Degrees Converter
+# TODO: Make final angle... if its 700°, it shows 340°. or if its 700.50, it shows 340,50.
+
 
 import tkinter
 from tkinter import *
@@ -53,7 +55,7 @@ def decimal_to_degrees():
         seconds_entry_box.delete(0, tkinter.END)
         decimal_entry_box.delete(0, tkinter.END)
 
-e = threading.Thread(name='decimalToDegrees', target=decimal_to_degrees)
+
 def degrees_to_decimal():
 
 
@@ -80,9 +82,6 @@ def degrees_to_decimal():
 
 
 
-
-t = threading.Thread(name='degreesToDecimal', target=degrees_to_decimal)
-
 global decimal_switch
 
 def window_focus():
@@ -95,7 +94,10 @@ def window_focus():
             decimal_switch = False
         time.sleep(0.01)
 
-f = threading.Thread(name='focus', target=window_focus)
+
+
+
+
 
 window = Tk()
 window.title("Vyrobené pre KMS <3")
@@ -167,6 +169,15 @@ decimal_entry_box = Entry(frame4, bd=2,width=20, font=('Arial',10,'bold'))
 decimal_entry_box.insert(0, "0")
 decimal_entry_box.grid(row=0, column=0)
 
+
+e = threading.Thread(name='decimalToDegrees', target=decimal_to_degrees)
+t = threading.Thread(name='degreesToDecimal', target=degrees_to_decimal)
+f = threading.Thread(name='focus', target=window_focus)
+
+e.daemon = True
+t.daemon = True
+f.daemon = True
+
 t.start()
 e.start()
 f.start()
@@ -174,3 +185,5 @@ f.start()
 
 window.mainloop()
 
+
+print("end of code")
