@@ -6,6 +6,7 @@ import tkinter
 from tkinter import *
 import threading
 import time
+from math import pi
 
 def decimal_to_degrees():
     try:
@@ -45,12 +46,16 @@ def decimal_to_degrees():
                 minutes_entry_box.insert(0, str(result_minutes))
                 seconds_entry_box.delete(0, tkinter.END)
                 seconds_entry_box.insert(0, str(result_seconds))
-            time.sleep(0.01)
+            time.sleep(0.1)
     except ValueError:
-        degrees_entry_box.delete(0, tkinter.END)
-        minutes_entry_box.delete(0, tkinter.END)
-        seconds_entry_box.delete(0, tkinter.END)
         decimal_entry_box.delete(0, tkinter.END)
+        decimal_entry_box.insert(0, "0")
+        degrees_entry_box.delete(0, tkinter.END)
+        degrees_entry_box.insert(0, "0")
+        minutes_entry_box.delete(0, tkinter.END)
+        minutes_entry_box.insert(0, "0")
+        seconds_entry_box.delete(0, tkinter.END)
+        seconds_entry_box.insert(0, "0")
 
 
 def degrees_to_decimal():
@@ -65,14 +70,31 @@ def degrees_to_decimal():
                             ((float(user_input_seconds)/3600) if user_input_seconds != "" else 0.0)
         except ValueError:
             decimal_entry_box.delete(0, tkinter.END)
+            decimal_entry_box.insert(0, "0")
             degrees_entry_box.delete(0, tkinter.END)
+            degrees_entry_box.insert(0, "0")
             minutes_entry_box.delete(0, tkinter.END)
+            minutes_entry_box.insert(0, "0")
             seconds_entry_box.delete(0, tkinter.END)
+            seconds_entry_box.insert(0, "0")
 
         if not decimal_switch:
             decimal_entry_box.delete(0, tkinter.END)
             decimal_entry_box.insert(0, str(result_decimal))
-        time.sleep(0.01)
+        time.sleep(0.1)
+
+
+def rads_to_decimal():
+    #TODO
+    pass
+
+
+
+def grads_to_decimal():
+    #TODO
+    pass
+
+
 def no_revolutions():
     while True:
         user_input_degrees = str(degrees_entry_box.get())
@@ -87,7 +109,7 @@ def no_revolutions():
                 no_revolutions_angle.configure(text="[ " + str(user_input_degrees) + "° ] / -" + str(360 - int(user_input_degrees)))
             else:
                 no_revolutions_angle.configure(text="Chyba pri výpočte")
-            time.sleep(0.01)
+            time.sleep(0.1)
         except:
             no_revolutions_angle.configure(text="Chyba pri výpočte")
 
@@ -100,7 +122,7 @@ def window_focus():
             decimal_switch = True
         else:
             decimal_switch = False
-        time.sleep(0.01)
+        time.sleep(0.1)
 
 
 window = Tk()
@@ -114,7 +136,7 @@ frame1.grid(row=0, column=0)
 frame2 = LabelFrame(window, bg="green")
 frame2.grid(row=1, column=0, pady=20)
 
-frame3 = LabelFrame(window, bg="green", bd=0)
+frame3 = LabelFrame(window, bg="gray", bd=0)
 frame3.grid(row=2, column=0, pady=0)
 
 frame4 = LabelFrame(window, bg="green", bd=4)
@@ -155,6 +177,14 @@ seconds_entry_box.grid(row=0, column=4)
 seconds_symbol = Label(frame2, text='"', fg='black', bg='gray', font=('Arial',16,'bold'))
 seconds_symbol.grid(row=0, column=5)
 
+
+grads_text = Label(frame3, text='Grads', fg='black', bg='gray', font=('Arial',10,'bold'))
+grads_text.grid(row=0, column=0)
+grads_entry_box = Entry(frame3, bd=3, width=15, font=('Arial', 10, 'bold'))
+grads_entry_box.insert(0, "0")
+grads_entry_box.grid(row=0, column=1)
+
+
 arrows = Label(frame3,
               text="⬆⬇",
               font=('Arial',20,'bold'),
@@ -164,7 +194,14 @@ arrows = Label(frame3,
               padx=10,
               pady=10,
               )
-arrows.grid(row=0, column=0)
+arrows.grid(row=0, column=2)
+
+rads_entry_box = Entry(frame3, bd=3, width=15, font=('Arial', 10, 'bold'))
+rads_entry_box.insert(0, "0")
+rads_entry_box.grid(row=0, column=3)
+rads_text = Label(frame3, text='Rads', fg='black', bg='gray', font=('Arial',10,'bold'))
+rads_text.grid(row=0, column=4)
+
 
 decimal_entry_box = Entry(frame4, bd=2,width=20, font=('Arial',10,'bold'))
 decimal_entry_box.insert(0, "0")
